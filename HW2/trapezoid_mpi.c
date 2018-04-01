@@ -3,7 +3,7 @@
 #include <mpi.h>
 
 #define pi 3.141592653589
-#define N 1000
+#define N 100000000
 
 int main(int argc, char ** argv)
 {
@@ -20,7 +20,11 @@ int main(int argc, char ** argv)
 	
 	MPI_Status status;
 
+
+
 	MPI_Init(&argc, &argv);
+
+	time1 = MPI_Wtime();
 
     MPI_Comm_rank(MPI_COMM_WORLD,&rank);
     MPI_Comm_size(MPI_COMM_WORLD,&size);
@@ -44,9 +48,19 @@ int main(int argc, char ** argv)
 			MPI_Recv(&recv_msg, 1, MPI_DOUBLE, i, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
 			answer+=recv_msg;
 
-		}		
+		}
+
 		answer=h*(sin(a)+sin(b)+answer);
-		printf("Answer = %0.5f \n", answer);
+
+		error =100*(answer-2)/2;
+
+		time2= MPI_Wtime();	
+		total_time	= time2-time1;
+
+		printf("Answer = %0.9f \n", answer);
+		printf("Time = %0.9f \n", total_time);
+		printf("Error = %0.9f \n", error);
+		printf("Number of threads = %d \n", size);
     }
 
     else
