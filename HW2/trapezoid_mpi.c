@@ -3,7 +3,7 @@
 #include <mpi.h>
 
 #define pi 3.141592653589
-#define N 100000000
+#define N 1000
 
 int main(int argc, char ** argv)
 {
@@ -25,11 +25,11 @@ int main(int argc, char ** argv)
 
 	time1 = MPI_Wtime();
 
-    MPI_Comm_rank(MPI_COMM_WORLD,&rank); // Each thread will be identified by its rank
-    MPI_Comm_size(MPI_COMM_WORLD,&size); //size stores total no of threads or communication units
+    MPI_Comm_rank(MPI_COMM_WORLD,&rank); // Each process will be identified by its rank
+    MPI_Comm_size(MPI_COMM_WORLD,&size); //size stores total no of processes or communication units
 
-    num = N/(size); // Divide the number of sampling points equally into threads
-    range=(b-a)/size; // Divide the range of the numbers equally between the threads
+    num = N/(size); // Divide the number of sampling points equally into processes
+    range=(b-a)/size; // Divide the range of the numbers equally between the processes
 
     	local_a =  a + rank*range; // Each thread will have their different starting point and will do the summation of sin(local_a), sin(local_a+h), ...... sin( local_a+(num-1)h )
     	send_msg=0; //This will be local to each thread and will store the sum of sin(local_a), sin(local_a+h), ...... sin( local_a+(num-1)h )
@@ -44,10 +44,10 @@ int main(int argc, char ** argv)
      if(rank==0)
     {
     	answer=send_msg; //To store the sum done by thread 0
-    	for(i=1;i<size;i++) //To receive and add the sums done by threads 1 to (size-1)
+    	for(i=1;i<size;i++) //To receive and add the sums done by processes 1 to (size-1)
 		{
 			MPI_Recv(&recv_msg, 1, MPI_DOUBLE, i, MPI_ANY_TAG, MPI_COMM_WORLD, &status ); 
-			answer+=recv_msg; //Adding the sums done by the threads 1 to (size-1)
+			answer+=recv_msg; //Adding the sums done by the processes 1 to (size-1)
 
 		}
 
@@ -58,11 +58,11 @@ int main(int argc, char ** argv)
 		time2= MPI_Wtime();	
 		total_time	= time2-time1;
 
-		printf("Answer = %0.9f \n", answer);
+		printf("Answer = %0.5f \n", answer);
 		printf("N = %d \n", N);
-		printf("Time = %0.9f \n", total_time);
-		printf("Error = %0.9f \n", error);
-		printf("Number of threads = %d \n", size);
+		printf("Time = %0.5f \n", total_time);
+		printf("Error = %0.5f \n", error);
+		printf("Number of processes = %d \n", size);
     }
 
     else

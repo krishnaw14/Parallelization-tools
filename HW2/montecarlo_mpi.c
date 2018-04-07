@@ -3,7 +3,7 @@
 #include <math.h>
 #include <mpi.h>
 
-#define N 1000000000
+#define N 10000
 #define pi 3.141592653589
 
 int main(int argc, char ** argv)
@@ -19,8 +19,8 @@ int main(int argc, char ** argv)
 
     time1 = MPI_Wtime();
 
-	MPI_Comm_rank(MPI_COMM_WORLD,&rank); // Rank is the identifier of a thread
-    MPI_Comm_size(MPI_COMM_WORLD,&size); // size stores the total number of threads created
+	MPI_Comm_rank(MPI_COMM_WORLD,&rank); // Rank is the identifier of a processes
+    MPI_Comm_size(MPI_COMM_WORLD,&size); // size stores the total number of processes created
 
     num=N/(size); // Equally dividing the number of sampling points between each thread
 	send_msg=0; // this is local to each thread and stores the number of points (out of num) lying within the curve sin(x)
@@ -41,10 +41,10 @@ int main(int argc, char ** argv)
 	if (rank==0)
 	{
 		sum=send_msg; // To store the sum done by thread 0
-		for(i=1;i<size;i++) // To receive and add the sums done by threads 1 to (size-1)
+		for(i=1;i<size;i++) // To receive and add the sums done by processes 1 to (size-1)
 		{
 			MPI_Recv(&recv_msg, 1, MPI_INT, i, MPI_ANY_TAG, MPI_COMM_WORLD, &status );
-			sum+=recv_msg; //adding the calculation done by threads 1 to (size-1)
+			sum+=recv_msg; //adding the calculation done by processes 1 to (size-1)
 
 		}	
  
@@ -54,11 +54,11 @@ int main(int argc, char ** argv)
 		time2 = MPI_Wtime();
 		total_time = time2- time1;
 
-		printf("Answer = %0.9f \n", answer);
+		printf("Answer = %0.5f \n", answer);
 		printf("N = %d \n", N);
-		printf("Time = %0.9f \n", total_time);
-		printf("Error = %0.9f \n", error);
-		printf("Number of threads = %d \n", size);
+		printf("Time = %0.5f \n", total_time);
+		printf("Error = %0.5f \n", error);
+		printf("Number of processes = %d \n", size);
 
 	}
 
