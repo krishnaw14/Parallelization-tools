@@ -26,7 +26,7 @@ __kernel void monte(
    
    i = (group_id * num_work_items + local_id) ;      
  
-   x = 3.14159*random_number(i*3.142+1);
+   x = 3.14159*random_number(i*3.142);
    y = random_number(i);      
    
    if(y-sin(x)<=0)
