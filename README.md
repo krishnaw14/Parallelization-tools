@@ -7,6 +7,8 @@ HW1- Numerical Integration (Trapezoid and Montecarlo method) using openmp
 
 HW2- Numerical Integration (Trapezoid and Montecarlo method) using MPI and opencl
 
+HW3- Code profiling of HW1 and HW2 codes (not GPU codes) using valgrind and gprof
+
 The GPU code has been optimised with respect to the number of work groups, that have been formed based on the work group size and no of sampling points provided. The reports attached demonstrate how good GPUs are with respect to scaling a problem.
 
 Overall in this problem, it is observer that the speed up provided by GPU is the fastest(about 2000 times faster in case of motecarlo intgration), followed by MPI (Upto 6 times faster than the serial code) and openmp(upto 2 times faster than the serial code).
