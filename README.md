@@ -1,7 +1,7 @@
 # HPSC-Homeworks
 ## ME766- High Performance Scientific Computing Homeworks
 
-The homeworks aim at getting familiar with the parallel programming API and how they can speed up the code. Both the homeworks contain the codes (which are written in C) and also the time analysis with different number of threads (for openmp) or processes (MPI) and convergence study with different number of sampling points. 
+The homeworks aim at getting familiar with the parallel programming API and how they can speed up the code. The first 2 homeworks contain the codes (which are written in C) and also the time analysis with different number of threads (for openmp) or processes (MPI) and convergence study with different number of sampling points. 
 
 HW1- Numerical Integration (Trapezoid and Montecarlo method) using openmp
 
