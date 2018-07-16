@@ -5,7 +5,7 @@ The homeworks aim at getting familiar with the parallel programming API and how 
 
 HW1- Numerical Integration (Trapezoid and Montecarlo method) using openmp
 
-HW2- Numerical Integration (Trapezoid and Montecarlo method) using MPI and opencl
+HW2- Numerical Integration (Trapezoid and Montecarlo method) using MPI and opencl (CUDA code will be added soon)
 
 HW3- Code profiling of HW1 and HW2 codes (not GPU codes) using valgrind and gprof
 
